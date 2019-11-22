@@ -1,0 +1,13 @@
+# Python
+*.pyc
+__pycache__
+build/
+dist/
+venv/
+*.egg-info
+
+# Mac OSX
+.DS_Store
+
+# IDE
+.idea/

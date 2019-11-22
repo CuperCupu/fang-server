@@ -1,0 +1,2 @@
+peewee>=3.11.2
+Werkzeug>=0.16.0

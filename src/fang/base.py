@@ -99,9 +99,8 @@ class EndpointContext:
                     raise BadRequest(
                         response=f"Invalid type {value.__class__.__name__} for parameter '{name}', expected {typing.__name__}"
                     )
-                if isinstance(value, dict) and issubclass(typing, BaseEntity):
+                # if isinstance(value, dict) and issubclass(typing, BaseEntity):
                     # stub
-                    pass
         return value
 
 

@@ -13,7 +13,7 @@ from .wrappers import Response, Request
 def parse_string(string: str, typing: type):
     if typing is int or typing is float or typing is bool:
         return typing(string)
-    return TypeError
+    raise TypeError
 
 
 def parse_date(string: str, expected_type: type):
@@ -21,7 +21,7 @@ def parse_date(string: str, expected_type: type):
         return datetime.datetime.fromisoformat(string)
     elif expected_type is datetime.date:
         return datetime.date.fromisoformat(string)
-    return TypeError
+    raise TypeError
 
 
 def normalize(item):

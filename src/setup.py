@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="fang-server",
-    version="2019.0.1-dev1",
+    version="2020.0.1",
     packages=setuptools.find_packages("src/"),
     package_dir={'': 'src/'},
     author="Suhendi",

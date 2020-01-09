@@ -54,5 +54,4 @@ __all__ = [
     'Respond',
     'Middleware',
     'Files',
-    'Path'
 ]

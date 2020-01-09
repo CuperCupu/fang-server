@@ -152,7 +152,7 @@ class Application(Routable):
         db.initialize(database)
         sync_tables()
 
-    def use_blueprint(self, prefix: str, collection: Blueprint) -> None:
+    def add(self, prefix: str, collection: Blueprint) -> None:
         if not prefix.startswith('/'):
             prefix = '/' + prefix
         self.mapping.add(Submount(prefix, collection.mapping))

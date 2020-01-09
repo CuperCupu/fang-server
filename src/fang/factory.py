@@ -2,6 +2,7 @@ import base64
 import json
 import os
 import traceback
+import datetime
 
 from werkzeug.exceptions import HTTPException
 
@@ -33,6 +34,8 @@ def normalize(item):
         item = normalize(item.to_dict())
     elif isinstance(item, bytes):
         item = base64.b64encode(item).decode('utf-8')
+    elif isinstance(item, datetime.date) or isinstance(item, datetime.datetime):
+        item = item.replace(tzinfo=datetime.timezone.utc).astimezone().isoformat()
     return item
 
 

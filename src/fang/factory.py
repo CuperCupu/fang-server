@@ -10,10 +10,18 @@ from fang.entities import BaseEntity
 from .wrappers import Response, Request
 
 
-def convert_string(string: str, typing: type):
+def parse_string(string: str, typing: type):
     if typing is int or typing is float or typing is bool:
         return typing(string)
-    return string
+    return TypeError
+
+
+def parse_date(string: str, expected_type: type):
+    if expected_type is datetime.datetime:
+        return datetime.datetime.fromisoformat(string)
+    elif expected_type is datetime.date:
+        return datetime.date.fromisoformat(string)
+    return TypeError
 
 
 def normalize(item):

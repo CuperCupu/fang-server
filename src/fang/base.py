@@ -8,7 +8,7 @@ from werkzeug.exceptions import BadRequest
 from werkzeug.routing import Map, Rule, Submount, RequestRedirect
 
 from .entities import db, sync_tables, BaseEntity
-from .factory import make_response, make_error_response, convert_string
+from .factory import make_response, make_error_response, parse_string, parse_date
 from .wrappers import Response, Request, Query, Body, Params, Middleware, Files
 
 
@@ -85,16 +85,23 @@ class EndpointContext:
         if typing is not None and value is not None:
             if isinstance(bucket, Params):
                 try:
-                    value = convert_string(value, typing)
-                except ValueError:
+                    value = parse_string(value, typing)
+                except (ValueError, TypeError):
                     raise BadRequest(
-                        response=f"Invalid type '{value.__class__.__name__}', expected '{typing.__name__}'")
+                        response=f"Invalid type {value.__class__.__name__} for parameter '{name}', expected {typing.__name__}"
+                    )
             else:
+                try:
+                    value = parse_date(value, typing)
+                except TypeError:
+                    pass
                 if not isinstance(value, typing):
                     raise BadRequest(
-                        response=f"Invalid type {value.__class__.__name__} for parameter '{name}', expected {typing.__name__}")
+                        response=f"Invalid type {value.__class__.__name__} for parameter '{name}', expected {typing.__name__}"
+                    )
                 if isinstance(value, dict) and issubclass(typing, BaseEntity):
-                    print('asd', value)
+                    # stub
+                    pass
         return value
 
 

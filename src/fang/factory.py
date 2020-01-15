@@ -42,7 +42,9 @@ def normalize(item):
         item = normalize(item.to_dict())
     elif isinstance(item, bytes):
         item = base64.b64encode(item).decode('utf-8')
-    elif isinstance(item, datetime.date) or isinstance(item, datetime.datetime):
+    elif isinstance(item, datetime.date):
+        item = item.isoformat()
+    elif isinstance(item, datetime.datetime):
         item = item.replace(tzinfo=datetime.timezone.utc).astimezone().isoformat()
     return item
 

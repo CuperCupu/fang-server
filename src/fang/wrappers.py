@@ -1,5 +1,5 @@
 import json
-from typing import Callable
+from typing import Callable, Union
 
 import werkzeug
 from werkzeug.routing import Map
@@ -9,8 +9,7 @@ class Params(dict):
     pass
 
 
-class Body(dict):
-    pass
+Body = Union[dict, list, str, int, float]
 
 
 class Query(dict):
@@ -27,9 +26,9 @@ class Request(werkzeug.Request):
         super().__init__(environ)
         self.query = Query(self.args)
         if self.mimetype == 'application/json':
-            self.body = Body(json.loads(self.data.decode('utf-8')))
+            self.body = json.loads(self.data.decode('utf-8'))
         else:
-            self.body = Body()
+            self.body = None
         self.endpoint, value = mapping.bind_to_environ(environ).match()
         self.params = Params(value)
 
